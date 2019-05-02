@@ -1,20 +1,11 @@
 <?php
-//if login button has been pressed do something
-if(isset($_POST['loginButton'])) {
-    //login button was pressed
-
-}
-
-if(isset($_POST['registerButton'])) {
-    //register button was pressed
-
-    //created a variable called username. Saved input from username portion of form within this variable. 
-   $username = $_POST['username'];
-   echo $username;
-}
+        // needed to import the code located in register-handler.php 
+    include("includes/handlers/register-handler.php");
+    include("includes/handlers/login-handler.php");
 ?>
 
 <html>
+
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -66,7 +57,7 @@ if(isset($_POST['registerButton'])) {
             </p>
             <p>
                 <label for="confirmEmail">Confirm Email</label>
-                <input id="confirmEmail" name="confirmEmail2" type="email" placeholder="" required>
+                <input id="confirmEmail" name="confirmEmail" type="email" placeholder="" required>
             </p>
 
 
