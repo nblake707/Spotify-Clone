@@ -1,5 +1,5 @@
 <?php
-                             /* Sanitization Functions */
+/* Sanitization Functions */
 
 /* At this point I could just repeat this code for all other fields but this would be redundant. Instead I will write a function that 
    will do the work for me. See below: sanitizeFormUsername & sanitizeFormString */
@@ -34,34 +34,12 @@ function sanitizeFormPassword($inputText)
     return $inputText;
 }
 
-                        /* Validation Functions */
-
-  function validateUsername($un){
-
-  }      
-  
-  function validateFirstName($fn){
-      
-}  
-
-function validateLastName($ln){
-      
-} 
-
-function validateEmails($em, $em2){
-      
-}  
-
-function validatePasswords($pw, $pw2){
-      
-}  
-
 
 //register button was pressed
 if (isset($_POST['registerButton'])) {
 
     /* Methods below are needed to prepare the data for persistance
-                                These actions are repeated for all fields */
+       These actions are repeated for all input fields */
 
     // username 
     $username = sanitizeFormUsername($_POST['username']);
@@ -84,11 +62,8 @@ if (isset($_POST['registerButton'])) {
     // password2 
     $password2 = sanitizeFormPassword($_POST['password2']);
 
-    // Still need to validate incoming data ex: username length
 
-     validateUsername($username); 
-     validateFirstName($firstName); 
-     validateLastName($lastName); 
-     validateEmails($email, $confirmEmail); 
-     validatePasswords($password, $password2); 
+
 }
+
+?>
