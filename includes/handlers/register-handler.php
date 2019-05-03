@@ -65,8 +65,7 @@ if (isset($_POST['registerButton'])) {
     /* Resgister function is called on data that has been sanitized
          contents of the register method handle data validation */
 
-    $account->register($username, $firstName, $lastName, $email, $confirmEmail, $password, $password2);
-
+    $wasSuccessful = $account->register($username, $firstName, $lastName, $email, $confirmEmail, $password, $password2);
 
 
 }

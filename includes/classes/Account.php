@@ -18,6 +18,15 @@ class Account
         $this->validateLastName($ln);
         $this->validateEmails($em, $em2);
         $this->validatePasswords($pw, $pw2);
+
+        // checking to see if there are errors within the error array
+        if(empty($this->errorArray)) {
+            //Insert into db
+            return true;
+        }
+        else {
+            return false;
+        }
     }
 
     /* Validation Functions */
@@ -69,6 +78,23 @@ class Account
         }
     }
 
-    private function validatePasswords($pw, $pw2)
-    { }
+    private function validatePasswords($pw, $pw2){ 
+        
+        if ($pw != $pw2){
+            array_push($this->errorArray, "Your password is invalid!");
+            return; 
+        }
+        //if password does not match this pattern (not A-Z a-z or 0-9) then 
+        if(preg_match('/[^A-Za-z0-9]/', $pw)){
+            array_push($this->errorArray, "Your password can onlh contain numbers and letters!");
+            return; 
+        }
+            //checking password length
+        if (strlen($pw) > 30 || strlen($pw) < 8) {
+            //if the username is unsuitable we will add a message to the message array
+            array_push($this->errorArray, "Your password must be between 8 and 30 characters");
+            return;
+    }
 }
+}
+?>
