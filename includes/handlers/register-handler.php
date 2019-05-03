@@ -62,6 +62,11 @@ if (isset($_POST['registerButton'])) {
     // password2 
     $password2 = sanitizeFormPassword($_POST['password2']);
 
+    /* Resgister function is called on data that has been sanitized
+         contents of the register method handle data validation */
+
+    $account->register($username, $firstName, $lastName, $email, $confirmEmail, $password, $password2);
+
 
 
 }

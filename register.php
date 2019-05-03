@@ -4,7 +4,7 @@ include("includes/classes/Account.php");
 
 //creating an instance of account so that I have access to all methods stored in the class
 $account = new Account();
-$account->register();
+
 
 include("includes/handlers/register-handler.php");
 include("includes/handlers/login-handler.php");
