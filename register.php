@@ -5,7 +5,8 @@ include("includes/classes/Account.php");
 include("includes/classes/Constants.php");
 
 //creating an instance of account so that I have access to all methods stored in the class
-$account = new Account();
+//passing in the con variable so that we can use the database
+$account = new Account($con);
 
 
 include("includes/handlers/register-handler.php");

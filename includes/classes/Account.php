@@ -2,11 +2,14 @@
 class Account
 {
     private $errorArray;
+    private $con;
 
     //This is a constructor 
-    public function __construct()
+    public function __construct($con)
     {
+        $this->con = $con;
         $this->errorArray = array();
+       
     }
 
     //needed to validate incoming data ex: username length
@@ -22,7 +25,7 @@ class Account
         // checking to see if there are errors within the error array
         if(empty($this->errorArray)) {
             //Insert into db
-            return true;
+            return insertUserDetails($un, $fn, $ln, $em, $pw);
         }
         else {
             return false;
@@ -35,6 +38,12 @@ class Account
             $error = "";
         }
         return "<span class ='errorMessage'>$error</span>";
+    }
+
+    private function insertUserDetails($un, $fn, $ln, $em, $em2, $pw, $pw2) {
+        //takes password and encrypts with md5 function
+        $encryptedPw = md5($pw);
+        $profilePic = ;
     }
 
     /* Validation Functions */
