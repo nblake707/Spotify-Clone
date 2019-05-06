@@ -67,6 +67,10 @@ if (isset($_POST['registerButton'])) {
 
     $wasSuccessful = $account->register($username, $firstName, $lastName, $email, $confirmEmail, $password, $password2);
 
+    //Direct to index page if login was successful
+    if($wasSuccessful){
+        header("Location: index.php");
+    }
 
 }
 

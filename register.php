@@ -1,6 +1,8 @@
 <?php
+include("includes/config.php");
 // needed to import the code located in register-handler.php 
 include("includes/classes/Account.php");
+include("includes/classes/Constants.php");
 
 //creating an instance of account so that I have access to all methods stored in the class
 $account = new Account();
@@ -8,6 +10,15 @@ $account = new Account();
 
 include("includes/handlers/register-handler.php");
 include("includes/handlers/login-handler.php");
+
+/*this method is used within the value portion of the inputs below. It checks to see if a value has been set. If true then the 
+value will be printed within the field */
+
+function getInputValue($name){
+    if(isset($_POST[$name])){
+        echo $_POST[$name];
+    }
+}
 ?>
 
 <html>
@@ -45,33 +56,45 @@ include("includes/handlers/login-handler.php");
 
             <h2>Register for a free account</h2>
             <p>
+                <?php echo $account->getError(Constants::$usernameCharacters); ?>
                 <label for="username">Username</label>
-                <input id="username" name="username" type="text" placeholder="e.g. pOlsen" required>
+                <input id="username" name="username" type="text" placeholder="e.g. pOlsen" value="<?php getInputValue('username') ?>" required>
             </p>
 
             <p>
+                <?php echo $account->getError(Constants::$firstNameCharacters); ?>
                 <label for="firstName">First Name</label>
-                <input id="firstName" name="firstName" type="text" placeholder="e.g. Peggy" required>
+                <input id="firstName" name="firstName" type="text" placeholder="e.g. Peggy" value="<?php getInputValue('firstName')?>" required>
             </p>
+
             <p>
+                <?php echo $account->getError(Constants::$lastNameCharacters); ?>
                 <label for="lastName">Last Name</label>
-                <input id="lastName" name="lastName" type="text" placeholder="e.g. Olsen" required>
+                <input id="lastName" name="lastName" type="text" placeholder="e.g. Olsen" value="<?php getInputValue('lastName')?>" required>
             </p>
+
             <p>
+                <?php echo $account->getError(Constants::$emailsDoNotMatch); ?>
+                <?php echo $account->getError(Constants::$emailInvalid); ?>
                 <label for="email">Email</label>
-                <input id="email" name="email" type="email" placeholder="" required>
+                <input id="email" name="email" type="email" placeholder="" value="<?php getInputValue('email')?>" required>
             </p>
+
             <p>
                 <label for="confirmEmail">Confirm Email</label>
-                <input id="confirmEmail" name="confirmEmail" type="email" placeholder="" required>
+                <input id="confirmEmail" name="confirmEmail" type="email" placeholder="" value="<?php getInputValue('email2')?>" required>
             </p>
 
-
             <p>
+                <?php echo $account->getError(Constants::$passwrdsDoNotMatch); ?>
+                <?php echo $account->getError(Constants::$passwrdsNotAlphaNumeric); ?>
+                <?php echo $account->getError(Constants::$passwordCharacters); ?>
                 <label for="password">Password</label>
                 <input id="password" name="password" type="password" placeholder="Your Password" required>
             </p>
+
             <p>
+                <?php echo $account->getError("Your username must be between 5 and 25 characters"); ?>
                 <label for="password2">Confirm Password</label>
                 <input id="password2" name="password2" type="password" placeholder="Conform Your Password" required>
             </p>

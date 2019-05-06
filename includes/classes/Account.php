@@ -29,6 +29,14 @@ class Account
         }
     }
 
+    //checks error array to see if the $error messaged passed in exists
+    public function getError($error){
+        if(!in_array($error, $this->errorArray)){
+            $error = "";
+        }
+        return "<span class ='errorMessage'>$error</span>";
+    }
+
     /* Validation Functions */
 
     private function validateUsername($un)
@@ -36,7 +44,7 @@ class Account
         //check the length of a username
         if (strlen($un) > 25 || strlen($un) < 5) {
             //if the username is unsuitable we will add a message to the message array
-            array_push($this->errorArray, "Your username must be between 5 and 25 characters");
+            array_push($this->errorArray, Constants::$usernameCharacters);
             return;
         }
 
@@ -47,7 +55,7 @@ class Account
     {
         if (strlen($fn) > 25 || strlen($fn) < 2) {
             //if the username is unsuitable we will add a message to the message array
-            array_push($this->errorArray, "Your first name must be between 2 and 25 characters");
+            array_push($this->errorArray, Constants::$firstNameCharacters);
             return;
         }
     }
@@ -56,7 +64,7 @@ class Account
     {
         if (strlen($ln) > 25 || strlen($ln) < 2) {
             //if the username is unsuitable we will add a message to the message array
-            array_push($this->errorArray, "Your last name must be between 2 and 25 characters");
+            array_push($this->errorArray, Constants::$lastNameCharacters);
             return;
         }
     }
@@ -64,7 +72,7 @@ class Account
     private function validateEmails($em, $em2)
     {
         if ($em != $em2) {
-            array_push($this->errorArray, "These emails don't match!");
+            array_push($this->errorArray, Constants::$emailsDoNotMatch);
             return;
         }
 
@@ -73,7 +81,7 @@ class Account
         but users could type complete giberish with an @ and still submit data. */
 
         if (!filter_var($em, FILTER_VALIDATE_EMAIL)) {
-            array_push($this->errorArray, "Email is invalid!");
+            array_push($this->errorArray, Constants::$emailInvalid);
             return;
         }
     }
@@ -81,20 +89,21 @@ class Account
     private function validatePasswords($pw, $pw2){ 
         
         if ($pw != $pw2){
-            array_push($this->errorArray, "Your password is invalid!");
+            array_push($this->errorArray, Constants::$passwrdsDoNotMatch);
             return; 
         }
         //if password does not match this pattern (not A-Z a-z or 0-9) then 
         if(preg_match('/[^A-Za-z0-9]/', $pw)){
-            array_push($this->errorArray, "Your password can onlh contain numbers and letters!");
+            array_push($this->errorArray, Constants::$passwrdsNotAlphaNumeric);
             return; 
         }
             //checking password length
         if (strlen($pw) > 30 || strlen($pw) < 8) {
             //if the username is unsuitable we will add a message to the message array
-            array_push($this->errorArray, "Your password must be between 8 and 30 characters");
+            array_push($this->errorArray, Constants::$passwordCharacters);
             return;
     }
 }
 }
+
 ?>
