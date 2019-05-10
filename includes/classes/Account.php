@@ -24,14 +24,14 @@ class Account
 
         // checking to see if there are errors within the error array
         if(empty($this->errorArray)) {
-            //Insert into db
-            return insertUserDetails($un, $fn, $ln, $em, $pw);
+            //If no errors are found then insert info into db
+            return $this->insertUserDetails($un, $fn, $ln, $em, $pw);
         }
         else {
             return false;
         }
     }
-
+  
     //checks error array to see if the $error messaged passed in exists
     public function getError($error){
         if(!in_array($error, $this->errorArray)){
@@ -40,10 +40,15 @@ class Account
         return "<span class ='errorMessage'>$error</span>";
     }
 
-    private function insertUserDetails($un, $fn, $ln, $em, $em2, $pw, $pw2) {
+
+    private function insertUserDetails($un, $fn, $ln, $em, $pw) {
         //takes password and encrypts with md5 function
         $encryptedPw = md5($pw);
-        $profilePic = ;
+        $profilePic = "assets/images/profile-pics/head_emerald.png";
+        $date = date("Y-m-d");
+        $result = mysqli_query($this->con, "INSERT INTO users VALUES ('', '$un', '$fn', '$ln', '$em', '$encryptedPw', '$date', '$profilePic')");
+        
+        return $result;
     }
 
     /* Validation Functions */
@@ -58,6 +63,12 @@ class Account
         }
 
         //must also check if the username already exists
+        $checkUsernameQuery = mysqli_query($this->con, "SELECT username FROM users WHERE username = '$un'");
+        //checking to see if this query returns any rows. If it does then trigger the username taken error
+        if(mysqli_num_rows($checkUsernameQuery) != 0) {
+            array_push($this->errorArray, Constants::$usernameTaken);
+            return;
+        }
     }
 
     private function validateFirstName($fn)
@@ -93,7 +104,14 @@ class Account
             array_push($this->errorArray, Constants::$emailInvalid);
             return;
         }
+
+        $checkEmailQuery = mysqli_query($this->con, "SELECT email FROM users WHERE email = '$em'");
+        //checking to see if this query returns any rows. If it does then trigger the username taken error
+        if(mysqli_num_rows($checkEmailQuery) != 0) {
+            array_push($this->errorArray, Constants::$emailTaken);
+            return;
     }
+}
 
     private function validatePasswords($pw, $pw2){ 
         
@@ -101,12 +119,12 @@ class Account
             array_push($this->errorArray, Constants::$passwrdsDoNotMatch);
             return; 
         }
-        //if password does not match this pattern (not A-Z a-z or 0-9) then 
+        // if password does not match this pattern (not A-Z a-z or 0-9) then 
         if(preg_match('/[^A-Za-z0-9]/', $pw)){
             array_push($this->errorArray, Constants::$passwrdsNotAlphaNumeric);
             return; 
         }
-            //checking password length
+            // checking password length
         if (strlen($pw) > 30 || strlen($pw) < 8) {
             //if the username is unsuitable we will add a message to the message array
             array_push($this->errorArray, Constants::$passwordCharacters);
